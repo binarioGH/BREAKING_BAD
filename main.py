@@ -28,12 +28,19 @@ class API:
 	def getInfo(self, atom, display):
 		atom = atom.title()
 		display.delete(0, END)
-		if atom not in self.content:
+		if atom not in self.content and atom != "List":
 			display.insert(END, "    Atom '{}' not found.".format(atom))
 		else:
-			display.insert(END, "    Name : {}".format(atom))
-			for info in self.content[atom]:
-				display.insert(END,"    {} : {}\n".format(info, self.content[atom][info]))
+			if atom == "List":
+				lst = list(self.content)
+			else:
+				lst = self.content[atom]
+				display.inser(END, "    Name : {}\n".format(atom))
+			for info in lst:
+				if atom == "List":
+					display.insert(END, "    {}".format(info))
+				else:
+					display.insert(END,"    {} : {}\n".format(info, self.content[atom][info]))
 
 def main():
 	elements = API("elements.json")
