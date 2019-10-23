@@ -35,7 +35,7 @@ class API:
 				lst = list(self.content)
 			else:
 				lst = self.content[atom]
-				display.inser(END, "    Name : {}\n".format(atom))
+				display.insert(END, "    Name : {}\n".format(atom))
 			for info in lst:
 				if atom == "List":
 					display.insert(END, "    {}".format(info))
