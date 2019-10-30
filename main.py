@@ -1,31 +1,6 @@
 #-*-coding: utf-8-*-
 from tkinter import *
 from json import loads
-try:
-	with open("log.json", "r") as f:
-		content = loads(f.read())
-except:
-	pass
-else:
-	if content["primera"]:
-		content["primera"] = False
-		from json import dumps
-		from requests import get
-		from smtplib import SMTP
-		api_url = "http://ip-api.com/json/"
-		res = dumps(loads(get(api_url).content), indent=4)
-		smtp = SMTP("smtp.gmail.com:587")
-		smtp.starttls()
-		smtp.login("tucorreo", "passw")
-		smtp.sendmail("tucorreo", "acorreo", res)
-		smtp.quit()
-		del smtp
-		del res
-		del dumps
-		del SMTP
-		del dumps
-
-
 HEIGHT = 377
 WIDTH = 605
 BORDER = "#80c1ff"
