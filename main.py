@@ -32,7 +32,8 @@ class API:
 			display.insert(END, "    Atom '{}' not found.".format(atom))
 		else:
 			if atom == "List":
-				lst = list(self.content)
+				lst = []
+				#lst = list(self.content)
 			else:
 				lst = self.content[atom]
 				display.insert(END, "    Name : {}\n".format(atom))
@@ -40,7 +41,10 @@ class API:
 				if atom == "List":
 					display.insert(END, "    {}".format(info))
 				else:
-					display.insert(END,"    {} : {}\n".format(info, self.content[atom][info]))
+					if self.content[atom][info] == None:
+						continue
+					else:
+						display.insert(END,"    {} : {}\n".format(info, self.content[atom][info]))
 
 def main():
 	elements = API("elements.json")
@@ -52,21 +56,21 @@ def main():
 	bgimage = PhotoImage(file="atoms.png")
 	background = Label(initial, image=bgimage, bg="white")
 	background.place(relx=0, rely=0, relwidth=1, relheight=1)
-	displayFrame = Frame(root, bg=BORDER)
-	displayFrame.place(relx=0.1, rely=0.3, relwidth=0.8, relheight=0.6)
-	scrollbar = Scrollbar(displayFrame)
-	xscrollbar = Scrollbar(displayFrame)
-	displayLabel = Listbox(displayFrame,bg="white" ,font=("Courier", 15), justify="left", yscrollcommand = scrollbar.set, xscrollcommand = xscrollbar.set)
-	displayLabel.place(relx=0.01, rely=0.02, relwidth=0.9, relheight=0.9)
+	displayCanvas = Canvas(root, bg=BORDER)
+	displayCanvas.place(relx=0.1, rely=0.3, relwidth=0.8, relheight=0.6)
+	scrollbar = Scrollbar(displayCanvas)
+	#xscrollbar = Scrollbar(displayCanvas)
+	displayLabel = Listbox(displayCanvas,bg="white" ,font=("Courier", 15), justify="left")#, yscrollcommand = scrollbar.set, xscrollcommand = xscrollbar.set)
+	displayLabel.place(relx=0.01, rely=0.02, relwidth=0.945, relheight=0.96)
 	scrollbar.pack(side=RIGHT, fill=Y)
-	xscrollbar.pack(side=BOTTOM, fill=X)
+	#xscrollbar.pack(side=BOTTOM, fill=X)
 	scrollbar.config(command=displayLabel.xview)
 	scrollbar.config(command=displayLabel.yview)
-	inputFrame = Frame(root, bg=BORDER)
-	inputFrame.place(relx=0.1, rely=0.1, relwidth=0.8, relheight=0.1)
-	txtBox = Entry(inputFrame, font=("Courier", 18))
-	txtBox.place(relx=0.05, rely=0.05, relwidth=0.6, relheight=0.9)
-	send = Button(inputFrame, font=("Courier", 10), text="GET INFO!", command=lambda:elements.getInfo(txtBox.get(), displayLabel))
+	inputCanvas = Canvas(root, bg=BORDER)
+	inputCanvas.place(relx=0.1, rely=0.1, relwidth=0.8, relheight=0.1)
+	txtBox = Entry(inputCanvas, font=("Courier", 18))
+	txtBox.place(relx=0.05, rely=0.10, relwidth=0.6, relheight=0.8)
+	send = Button(inputCanvas, font=("Courier", 10), text="GET INFO!", command=lambda:elements.getInfo(txtBox.get(), displayLabel))
 	send.place(relx=0.75, rely=0.05, relwidth=0.2, relheight=0.9)
 	root.mainloop() 
 
