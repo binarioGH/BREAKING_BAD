@@ -46,10 +46,11 @@ def main():
 	elements = API("elements.json")
 	root = Tk()
 	root.title("Atom Gui")
-	initial = Canvas(root,height=HEIGHT, width=WIDTH)
-	initial.pack()
+	root.geometry("{}x{}".format(WIDTH, HEIGHT))
+	initial = Frame(root, bg="white")
+	initial.place(relx=0, rely=0, relwidth=1, relheight=1)
 	bgimage = PhotoImage(file="atoms.png")
-	background = Label(initial, image=bgimage)
+	background = Label(initial, image=bgimage, bg="white")
 	background.place(relx=0, rely=0, relwidth=1, relheight=1)
 	displayFrame = Frame(root, bg=BORDER)
 	displayFrame.place(relx=0.1, rely=0.3, relwidth=0.8, relheight=0.6)
@@ -67,7 +68,7 @@ def main():
 	txtBox.place(relx=0.05, rely=0.05, relwidth=0.6, relheight=0.9)
 	send = Button(inputFrame, font=("Courier", 10), text="GET INFO!", command=lambda:elements.getInfo(txtBox.get(), displayLabel))
 	send.place(relx=0.75, rely=0.05, relwidth=0.2, relheight=0.9)
-	root.mainloop()
+	root.mainloop() 
 
 
 if __name__ == '__main__':
